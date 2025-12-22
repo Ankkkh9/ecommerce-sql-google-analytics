@@ -1,21 +1,16 @@
----Q6: Trend of Stock level & MoM diff % by all product in 2011. If %gr rate is null then 0. Round to 1 decimal
+---Query 06: Average amount of money spent per session. Only include purchaser data in July 2017
+---Hint 2: avg_spend_per_session = total revenue/ total visit
 
 
----Choose facts which need in the formula
-WITH raw1 AS(SELECT b.name,
-                SUM(StockedQty) AS cur_stock,
-                  EXTRACT(MONTH FROM a.ModifiedDate) AS month,
-                  EXTRACT(YEAR FROM a.ModifiedDate) AS year
-            FROM `adventureworks2019.Production.WorkOrder` as a
-            LEFT JOIN `adventureworks2019.Production.Product` as b
-            ON a.ProductID = b.ProductID
-            WHERE EXTRACT(YEAR FROM a.ModifiedDate) = 2011
-            GROUP BY 1,3,4)
-
-
----Calculate previous stock quantity & difference
-SELECT name, month, year, cur_stock,
-      LAG(cur_stock) OVER(PARTITION BY name ORDER BY month) AS pre_stock,
-      ROUND(IFNULL(cur_stock/LAG(cur_stock) OVER(PARTITION BY name ORDER BY month)-1,0)*100,1) AS diff
-FROM raw1
-ORDER BY name, month DESC;
+--- Generate format YYYYMM
+SELECT FORMAT_DATE('%Y%m', PARSE_DATE('%Y%m%d', date)) AS month,
+---avg_spend_per_session = total revenue/ total visit
+      ROUND((SUM(productRevenue)/SUM(totals.visits))/1000000,2) AS avg_revenue_by_user_per_visit
+FROM `bigquery-public-data.google_analytics_sample.ga_sessions_201707*`,
+  UNNEST (hits) hits,
+  UNNEST (hits.product) product
+--- Filter the purchaser only
+WHERE productRevenue IS NOT NULL
+AND product.productRevenue IS NOT NULL
+GROUP BY FORMAT_DATE('%Y%m', PARSE_DATE('%Y%m%d', date))
+HAVING SUM(totals.transactions)>=1;
