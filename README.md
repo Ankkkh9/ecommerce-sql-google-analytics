@@ -35,7 +35,7 @@ How do visits, pageviews, and transactions change over time?
 - Total Pageviews
 - Total Transactions
 
-📂 SQL: `query_01_overview.sql`
+📂 SQL: [query_01_overview.sql](sql/query_01_overview.sql)
 
 ---
 
@@ -46,7 +46,7 @@ Which traffic sources drive the most visits and how engaged are users from each 
 **Metric:**
 - Bounce Rate = Total Bounces / Total Visits
 
-📂 SQL: `query_02_bounce_rate.sql`
+📂 SQL: [query_02_bounce_rate.sql](sql/query_02_bounce_rate.sql)
 
 ---
 
@@ -54,7 +54,7 @@ Which traffic sources drive the most visits and how engaged are users from each 
 **Question:**  
 How does revenue vary by traffic source across weeks and months?
 
-📂 SQL: `query_03_revenue_time.sql`
+📂 SQL: [query_03_revenue_time.sql](sql/query_03_revenue_time.sql)
 
 ---
 
@@ -65,7 +65,7 @@ Do purchasers view more pages than non-purchasers?
 **Metric:**
 - Average Pageviews per User
 
-📂 SQL: `query_04_pageview_by_user_type.sql`
+📂 SQL: [query_04_pageview_by_user_type.sql](sql/query_04_pageview_by_user_type.sql)
 
 ---
 
@@ -73,7 +73,7 @@ Do purchasers view more pages than non-purchasers?
 **Question:**  
 How many transactions does a purchasing user make on average?
 
-📂 SQL: `query_05_avg_transaction.sql`
+📂 SQL: [query_05_avg_transaction.sql](sql/query_05_avg_transaction.sql)
 
 ---
 
@@ -81,7 +81,7 @@ How many transactions does a purchasing user make on average?
 **Question:**  
 How much revenue does each visit generate from purchasers?
 
-📂 SQL: `query_06_avg_spend.sql`
+📂 SQL: [query_06_avg_spend.sql](sql/query_06_avg_spend.sql)
 
 ---
 
@@ -90,7 +90,7 @@ How much revenue does each visit generate from purchasers?
 What other products are purchased by customers who bought  
 **"YouTube Men's Vintage Henley"**?
 
-📂 SQL: `query_07_cross_sell.sql`
+📂 SQL: [query_07_cross_sell.sql](sql/query_07_cross_sell.sql)
 
 ---
 
@@ -102,7 +102,7 @@ How do users move through the funnel from product view → add to cart → purch
 - Add-to-Cart Rate
 - Purchase Rate
 
-📂 SQL: `query_08_funnel_cohort.sql`
+📂 SQL: [query_08_funnel_cohort.sql](sql/query_08_funnel_cohort.sql)
 
 ---
 
