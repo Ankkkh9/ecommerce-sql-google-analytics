@@ -1,5 +1,4 @@
 ---Query 04: Average number of pageviews by purchaser type (purchasers vs non-purchasers) in June, July 2017.
----Hint 3: Avg pageview = total pageview / number unique user.
 
 
 --- CTE for purchaser (generate YYYYMM & avg pageview)
