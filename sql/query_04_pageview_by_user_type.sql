@@ -1,43 +1,40 @@
----Q4: Calc Total Discount Cost belongs to Seasonal Discount for each SubCategory
+---Query 04: Average number of pageviews by purchaser type (purchasers vs non-purchasers) in June, July 2017.
+---Hint 3: Avg pageview = total pageview / number unique user.
 
 
----total discount cost = %discount * quantity discount * price unit discount
+--- CTE for purchaser (generate YYYYMM & avg pageview)
+WITH purchaser_data AS(SELECT FORMAT_DATE('%Y%m', PARSE_DATE('%Y%m%d', date)) AS month,
+                        SUM(totals.pageviews) AS total_pageview,
+                        COUNT(DISTINCT fullVisitorId) AS no_unique_user,
+                        SUM(productRevenue) AS revenue,
+                        ROUND(SUM(totals.pageviews)/COUNT(DISTINCT fullVisitorId),2) AS avg_pageviews_purchase
+                FROM `bigquery-public-data.google_analytics_sample.ga_sessions_2017*`,
+                        UNNEST (hits) hits,
+                        UNNEST (hits.product) product
+                WHERE _table_suffix between '0601' and '0731'
+                        AND productRevenue IS NOT NULL
+                GROUP BY FORMAT_DATE('%Y%m', PARSE_DATE('%Y%m%d', date))
+                HAVING SUM(totals.transactions)>=1),
 
 
+--- CTE for non-purchaser (generate YYYYMM & avg pageview)
+non_purchaser_data AS(SELECT FORMAT_DATE('%Y%m', PARSE_DATE('%Y%m%d', date)) AS month,
+                        SUM(totals.pageviews) AS total_pageview,
+                        COUNT(DISTINCT fullVisitorId) AS no_unique_user,
+                        SUM(productRevenue) AS revenue,
+                        ROUND(SUM(totals.pageviews)/COUNT(DISTINCT fullVisitorId),2) AS avg_pageviews_non_purchase
+                FROM `bigquery-public-data.google_analytics_sample.ga_sessions_2017*`,
+                        UNNEST (hits) hits,
+                        UNNEST (hits.product) product
+                WHERE _table_suffix between '0601' and '0731'
+                        AND productRevenue IS NULL
+                        AND totals.transactions IS NULL
+                GROUP BY FORMAT_DATE('%Y%m', PARSE_DATE('%Y%m%d', date)))
 
 
---- calculate total discount cost
-WITH raw1 AS(SELECT EXTRACT(YEAR FROM sale.ModifiedDate) AS year,
-      subcat.name AS name,
-      DiscountPCT*UnitPrice*OrderQty AS total_cost,
-      offer.Type
-
-
-                  FROM `adventureworks2019.Sales.SpecialOffer` AS offer
-
-
-                  LEFT JOIN `adventureworks2019.Sales.SalesOrderDetail` AS sale
-                    ON offer.SpecialofferID = sale.SpecialofferID
-
-
-                  LEFT JOIN `adventureworks2019.Production.Product` AS product_defi
-                    ON sale.ProductID = product_defi.ProductID
-
-
-                  LEFT JOIN `adventureworks2019.Production.ProductSubcategory` AS subcat
-                    ON CAST(product_defi.ProductSubcategoryID AS INT64) = subcat.ProductSubcategoryID
-
-
-                  WHERE EXTRACT(YEAR FROM sale.ModifiedDate) IN (SELECT EXTRACT(YEAR FROM ModifiedDate)
-                                                                  FROM `adventureworks2019.Sales.SalesOrderDetail`
-                                                                  GROUP BY EXTRACT(YEAR FROM ModifiedDate)
-                                                                  HAVING COUNT( DISTINCT EXTRACT(MONTH FROM ModifiedDate)) = 12))
-
-
----Filter by seasonal discount
-SELECT year, name,
-      ROUND(SUM(total_cost),2) AS cost,
-FROM raw1
-WHERE Type LIKE '%Seasonal Discount%'
-GROUP BY year, name
-ORDER BY year;
+--- Combine 2 data of non_purchase & purchase
+SELECT purchaser_data.month,avg_pageviews_purchase,avg_pageviews_non_purchase
+FROM purchaser_data
+INNER JOIN non_purchaser_data
+ON purchaser_data.month = non_purchaser_data.month
+ORDER BY purchaser_data.month;
