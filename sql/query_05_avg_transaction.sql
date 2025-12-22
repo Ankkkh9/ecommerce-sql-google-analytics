@@ -1,33 +1,15 @@
----Q5: Retention rate of Customer in 2014 with status of Successfully Shipped (Cohort Analysis)
+---Query 05: Average number of transactions per user that made a purchase in July 2017
 
 
----Step 1: create month & count customer in all month
-WITH rawdata AS(SELECT customerID,
-                  EXTRACT(MONTH FROM ModifiedDate) AS month,
-                FROM `adventureworks2019.Sales.SalesOrderHeader`
-                WHERE EXTRACT(YEAR FROM ModifiedDate) = 2014
-                      AND status = 5
-                ORDER BY month),
-
-
----Step 2: Find the opening month
-      opening AS(SELECT customerID,
-                  MIN(EXTRACT(MONTH FROM ModifiedDate)) AS opening_m
-                  FROM `adventureworks2019.Sales.SalesOrderHeader`
-                  WHERE EXTRACT(YEAR FROM ModifiedDate) = 2014
-                        AND status = 5
-                  GROUP BY customerID)
-
-
-
-
-SELECT opening_m AS month_join,
-      CONCAT('M - ',month-opening_m) AS month_diff,
-      COUNT(distinct rawdata.customerID)
-FROM rawdata
-LEFT JOIN opening
-ON rawdata.customerID = opening.customerID
-GROUP BY 1,2
-ORDER BY month_join, month_diff;
-
-
+--- Generate format YYYYMM
+SELECT FORMAT_DATE('%Y%m', PARSE_DATE('%Y%m%d', date)) AS month,
+--- Caluclate avg number of transactions per user= total transactions/ total unique vistors
+      ROUND(SUM(totals.transactions)/COUNT(DISTINCT fullVisitorId),2) AS Avg_total_transactions_per_user
+FROM `bigquery-public-data.google_analytics_sample.ga_sessions_201707*`,
+  UNNEST (hits) hits,
+  UNNEST (hits.product) product
+--- Filter the purchaser only
+WHERE productRevenue IS NOT NULL
+AND product.productRevenue IS NOT NULL
+GROUP BY FORMAT_DATE('%Y%m', PARSE_DATE('%Y%m%d', date))
+HAVING SUM(totals.transactions)>=1;
