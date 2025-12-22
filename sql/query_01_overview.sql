@@ -13,6 +13,4 @@ SELECT month,
       SUM(totals.transactions) AS transactions
 FROM raw_1_3
 GROUP BY month
-ORDER BY month
-
-
+ORDER BY month;
