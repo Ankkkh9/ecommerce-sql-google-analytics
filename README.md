@@ -5,7 +5,7 @@ This project analyzes e-commerce user behavior and performance using SQL on Goog
 The objective is to answer key business questions related to traffic quality, user engagement, revenue performance, and conversion funnel efficiency.
 
 **Dataset**
-- Google BigQuery Public Dataset: `google_analytics_sample`
+- Google BigQuery Public Dataset: `bigquery-public-data.google_analytics_sample.ga_sessions_2017`
 - Time period: January – July 2017
 
 **Tools**
