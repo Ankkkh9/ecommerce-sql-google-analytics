@@ -28,7 +28,31 @@ The goal is to uncover **traffic quality, engagement patterns, revenue drivers, 
 
 ### 1️⃣ Overall E-commerce Performance
 
-📂 SQL: `query_01_overview.sql`
+**📂 SQL Code**
+-- Query 01: Calculate total visits, pageviews, and transactions
+-- Time period: January – March 2017
+
+-- Step 1: Generate month in YYYYMM format
+WITH raw_1_3 AS (
+    SELECT
+        *,
+        FORMAT_DATE('%Y%m', PARSE_DATE('%Y%m%d', date)) AS month
+    FROM `bigquery-public-data.google_analytics_sample.ga_sessions_2017*`
+    WHERE _table_suffix BETWEEN '0101' AND '0331'
+)
+
+-- Step 2: Aggregate visits, pageviews, and transactions by month
+SELECT
+    month,
+    SUM(totals.visits) AS visits,
+    SUM(totals.pageviews) AS pageviews,
+    SUM(totals.transactions) AS transactions
+FROM raw_1_3
+GROUP BY month
+ORDER BY month;
+
+**Results**
+
 
 **Insight**
 - Transactions grew faster than visits, indicating **improving conversion efficiency**.
