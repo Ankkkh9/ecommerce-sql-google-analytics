@@ -32,6 +32,9 @@ This query calculates total visits, pageviews, and transactions by month to eval
 
 **📂 SQL Code**
 
+### 🧮 SQL Code
+
+```sql
 -- Step 1: Generate month in YYYYMM format
 WITH raw_1_3 AS (
     SELECT
