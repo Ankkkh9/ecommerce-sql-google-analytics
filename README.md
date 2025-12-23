@@ -27,10 +27,10 @@ The goal is to uncover **traffic quality, engagement patterns, revenue drivers, 
 ---
 
 ### 1️⃣ Overall E-commerce Performance
+**Query 01 – E-commerce Performance Overview (Jan–Mar 2017)**  
+This query calculates total visits, pageviews, and transactions by month to evaluate short-term performance trends.
 
 **📂 SQL Code**
--- Query 01: Calculate total visits, pageviews, and transactions
--- Time period: January – March 2017
 
 -- Step 1: Generate month in YYYYMM format
 WITH raw_1_3 AS (
