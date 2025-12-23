@@ -1,12 +1,12 @@
-# E-commerce Analytics Project using SQL
+# E-commerce Business Analytics Project (SQL)
 
 ## 📌 Project Overview
-This project analyzes e-commerce user behavior and performance using SQL on Google Analytics data.  
-The objective is to answer key business questions related to traffic quality, user engagement, revenue performance, and conversion funnel efficiency.
+This project analyzes **e-commerce performance and user behavior** using SQL on the **Google Analytics public dataset**.  
+The goal is to uncover **traffic quality, engagement patterns, revenue drivers, repeat purchase behavior, and conversion funnel efficiency** to support data-driven business decisions.
 
 **Dataset**
-- Google BigQuery Public Dataset: [google_analytics_sample](https://console.cloud.google.com/bigquery?p=bigquery-public-data&d=google_analytics_sample&page=dataset)
-- Time period: January – July 2017
+- Google Analytics Sample Dataset (BigQuery Public)
+- Time period: **January – July 2017**
 
 **Tools**
 - Google BigQuery (Standard SQL)
@@ -14,200 +14,112 @@ The objective is to answer key business questions related to traffic quality, us
 ---
 
 ## 🎯 Business Objectives
-- Understand overall e-commerce performance trends
-- Evaluate traffic quality across acquisition channels
-- Compare behavior between purchasers and non-purchasers
-- Identify revenue-driving traffic sources
-- Analyze conversion funnel performance and drop-offs
-- Discover cross-selling opportunities
+- Evaluate overall e-commerce performance and conversion efficiency  
+- Identify high-intent traffic sources and revenue drivers  
+- Compare engagement between purchasers and non-purchasers  
+- Analyze repeat purchase behavior and monetization efficiency  
+- Identify funnel bottlenecks and cross-selling opportunities  
 
 ---
 
-## 📊 Business Questions, Results & Insights
+## 📊 Business Questions & Key Insights
 
 ---
 
-### 1️⃣ E-commerce Performance Overview (Jan–Mar 2017)
+### 1️⃣ Overall E-commerce Performance
 
-**Business Question**  
-How do visits, pageviews, and transactions change over time?
+📂 SQL: `query_01_overview.sql`
 
-**KPIs**
-- Total Visits
-- Total Pageviews
-- Total Transactions
-
-📂 SQL: [query_01_overview.sql](sql/query_01_overview.sql)
-
-**Results**
-- Visits slightly decreased from **64,694 (Jan)** to **62,192 (Feb)**, then increased sharply to **69,931 (Mar)**.
-- Pageviews showed a strong upward trend, peaking at **259,522** in March.
-- Transactions increased from **713** in January to **993** in March (**+39%**).
-
-**Insights**
-- Conversion performance improved faster than traffic growth.
-- Increasing transactions despite fluctuating visits suggests improved traffic quality or on-site experience.
-- March represents a strong growth period suitable for scaling campaigns or inventory.
+**Insight**
+- Transactions grew faster than visits, indicating **improving conversion efficiency**.
+- March shows a strong performance uplift, suggesting a suitable period for scaling campaigns or inventory.
 
 ---
 
-### 2️⃣ Traffic Quality Analysis – Bounce Rate (July 2017)
+### 2️⃣ Traffic Quality by Source
 
-**Business Question**  
-Which traffic sources drive the most visits and how engaged are users from each source?
+📂 SQL: `query_02_bounce_rate.sql`
 
-**Metric**
-- Bounce Rate = Total Bounces / Total Visits
-
-📂 SQL: [query_02_bounce_rate.sql](sql/query_02_bounce_rate.sql)
-
-**Results**
-- **Google** generated the highest traffic volume (**38,400 visits**) with a bounce rate of **51.6%**.
-- **Direct traffic** showed stronger engagement with a lower bounce rate (**43.3%**).
-- Some sources had very high bounce rates:
-  - `l.facebook.com`: **88.2%**
-  - `youtube.com`: **66.7%**
-- High-quality, low-bounce sources included:
-  - `mail.google.com`: **24.8%**
-  - `reddit.com`: **28.6%**
-
-**Insights**
-- Traffic volume does not equal traffic quality.
-- Direct and email traffic represent high-intent users.
-- Social traffic requires landing page and targeting optimization.
-- Bounce rate is a critical metric for marketing budget allocation.
+**Insight**
+- **High-intent channels (Direct, Email)** show lower bounce rates and stronger engagement.
+- High-volume social traffic exhibits weak engagement, highlighting optimization opportunities.
+- Traffic quality is more important than raw traffic volume.
 
 ---
 
-### 3️⃣ Revenue Analysis by Traffic Source (June 2017)
+### 3️⃣ Revenue Drivers by Traffic Source
 
-**Business Question**  
-How does revenue vary by traffic source across weekly and monthly views?
+📂 SQL: `query_03_revenue_time.sql`
 
-📂 SQL: [query_03_revenue_time.sql](sql/query_03_revenue_time.sql)
-
-**Results**
-- **Direct traffic** generated the highest revenue:
-  - Monthly revenue: **97,333**
-- **Google** ranked second with **18,757** in monthly revenue.
-- Revenue fluctuated significantly on a weekly basis.
-
-**Insights**
-- Returning users (direct traffic) have the highest purchase intent.
-- SEO and search traffic drive volume but are not the strongest monetization channel.
-- Weekly analysis helps identify campaign-driven revenue spikes.
+**Insight**
+- **Direct traffic generates the highest revenue**, reflecting strong returning-user intent.
+- Search traffic drives volume but monetizes less efficiently.
+- Weekly analysis reveals campaign-driven revenue spikes.
 
 ---
 
-### 4️⃣ Purchasers vs Non-Purchasers – Pageview Behavior (Jun–Jul 2017)
+### 4️⃣ Engagement Behavior: Purchasers vs Non-Purchasers
 
-**Business Question**  
-Do purchasers view more pages than non-purchasers?
+📂 SQL: `query_04_pageview_by_user_type.sql`
 
-📂 SQL: [query_04_pageview_by_user_type.sql](sql/query_04_pageview_by_user_type.sql)
-
-**Results**
-- Purchasers showed significantly higher engagement:
-  - June: **94.0 vs 316.9 pageviews**
-  - July: **124.2 vs 334.1 pageviews**
-- Engagement increased for both groups in July.
-
-**Insights**
-- Higher engagement strongly correlates with purchase behavior.
-- Pageviews can act as an early indicator of purchase intent.
-- Product recommendations and internal linking can help increase conversion.
+**Insight**
+- Purchasers consistently demonstrate **much deeper engagement** than non-purchasers.
+- Pageview depth is a strong leading indicator of purchase intent.
+- Improving content discovery and internal linking can support conversion growth.
 
 ---
 
-### 5️⃣ Purchase Frequency Analysis (July 2017)
+### 5️⃣ Purchase Frequency Analysis
 
-**Business Question**  
-How many transactions does a purchasing user make on average?
+📂 SQL: `query_05_avg_transaction.sql`
 
-📂 SQL: [query_05_avg_transaction.sql](sql/query_05_avg_transaction.sql)
-
-**Results**
-- Average transactions per purchasing user: **4.16**
-
-**Insights**
-- Clear evidence of repeat purchase behavior.
-- Strong foundation for loyalty programs and remarketing strategies.
-- Indicates high potential customer lifetime value (CLV).
+**Insight**
+- Purchasing users complete multiple transactions on average.
+- Indicates strong repeat purchase behavior and **high customer lifetime value (CLV) potential**.
 
 ---
 
-### 6️⃣ Monetization Efficiency – Average Spend per Session (July 2017)
+### 6️⃣ Monetization Efficiency per Session
 
-**Business Question**  
-How much revenue does each visit generate from purchasers?
+📂 SQL: `query_06_avg_spend.sql`
 
-📂 SQL: [query_06_avg_spend.sql](sql/query_06_avg_spend.sql)
-
-**Results**
-- Average revenue per visit: **43.86 USD**
-
-**Insights**
-- Revenue per visit is a strong KPI for funnel efficiency.
-- Increasing conversion rate or AOV directly improves monetization.
-- Useful for evaluating campaign ROI beyond traffic metrics.
+**Insight**
+- Revenue per visit is a critical KPI for evaluating funnel efficiency.
+- Improvements in conversion rate or average order value directly impact revenue performance.
 
 ---
 
-### 7️⃣ Cross-Selling Analysis  
-*(YouTube Men's Vintage Henley)*
+### 7️⃣ Cross-Selling Opportunities
 
-**Business Question**  
-What other products are purchased by customers who bought *YouTube Men's Vintage Henley*?
+📂 SQL: `query_07_cross_sell.sql`
 
-📂 SQL: [query_07_cross_sell.sql](sql/query_07_cross_sell.sql)
-
-**Results**
-- Frequently co-purchased products include:
-  - **Google Sunglasses (20 units)**
-  - **Google Women’s Vintage Hero Tee (7 units)**
-  - **SPF-15 Lip Balm (6 units)**
-  - Other fashion and accessory items
-
-**Insights**
-- Strong cross-selling patterns within fashion and accessory categories.
-- Opportunities for product bundling and “Frequently Bought Together” recommendations.
-- Cross-selling can increase AOV without additional traffic spend.
+**Insight**
+- Customers who purchase core apparel items frequently buy related accessories.
+- Clear opportunities exist for **bundling and recommendation strategies** to increase AOV.
 
 ---
 
-### 8️⃣ Conversion Funnel & Cohort Analysis (Jan–Mar 2017)
+### 8️⃣ Conversion Funnel Performance
 
-**Business Question**  
-How do users move through the funnel from product view → add to cart → purchase?
+📂 SQL: `query_08_funnel_cohort.sql`
 
-📂 SQL: [query_08_funnel_cohort.sql](sql/query_08_funnel_cohort.sql)
-
-**Results**
-
-| Month | Add-to-Cart Rate | Purchase Rate |
-|------|------------------|---------------|
-| Jan  | 28.47%           | 8.31%         |
-| Feb  | 34.25%           | 9.59%         |
-| Mar  | 37.29%           | 12.64%        |
-
-- Conversion rates improved consistently over time.
-
-**Insights**
-- Funnel performance improved significantly, especially at the purchase stage.
-- The main bottleneck occurs after add-to-cart, but shows clear improvement.
-- UX, pricing, or promotional changes likely contributed to higher conversion efficiency.
+**Insight**
+- Funnel efficiency improved steadily over time.
+- The largest drop-off occurs after add-to-cart, but shows consistent improvement.
+- UX, pricing, or promotional changes likely contributed to higher conversion rates.
 
 ---
 
-## 🔑 Overall Business Takeaways
+## 🔑 Key Takeaways
 - Conversion efficiency improved faster than traffic growth.
-- High-intent traffic (Direct, Email) drives disproportionate revenue.
+- **High-intent traffic sources** drive disproportionate revenue.
 - Engagement depth strongly correlates with purchase behavior.
-- Funnel optimization and cross-selling provide high-ROI growth opportunities.
+- Repeat purchases and cross-selling present high-ROI growth opportunities.
+- Funnel optimization offers meaningful upside without increasing traffic spend.
 
 ---
 
 ## 🚀 Next Steps
-- Visualize insights in an interactive Power BI dashboard
-- Segment users by behavior and value for advanced analysis
-- Extend analysis to customer lifetime value (CLV)
+- Build an interactive Power BI dashboard for performance monitoring  
+- Segment users by value and behavior for deeper analysis  
+- Extend analysis to customer lifetime value (CLV) and retention modeling  
