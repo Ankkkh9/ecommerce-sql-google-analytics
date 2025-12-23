@@ -79,7 +79,7 @@ Question: Bounce rate per traffic source in July 2017 (Bounce_rate = num_bounce/
 --- Filter for source and total visits,total bounces
 WITH raw_data AS(SELECT trafficSource.source AS source,
       SUM(totals.visits) AS total_visits,
-      SUM(totals.bounces) AS total_no_of_bounces,
+      SUM(totals.bounces) AS total_no_of_bounces
       FROM `bigquery-public-data.google_analytics_sample.ga_sessions_201707*`
       GROUP BY trafficSource.source  )
 
@@ -90,6 +90,8 @@ ORDER BY total_visits DESC;
 ```
 
 **Results**
+
+![Result1](images/e1.png)
 
 **Insight**
 - **High-intent channels (Direct, Email)** show lower bounce rates and stronger engagement.
@@ -145,6 +147,10 @@ ORDER BY revenue DESC;
 ```
 
 **Results**
+
+*Revenue is shown in USD (millions).*
+
+![Result2](images/e2.png)
 
 **Insight**
 - **Direct traffic generates the highest revenue**, reflecting strong returning-user intent.
@@ -312,6 +318,8 @@ ORDER BY quantity DESC;
 ```
 
 **Results**
+
+![Result3](images/e3.png)
 
 **Insight**
 - Customers who purchase core apparel items frequently buy related accessories.
